@@ -60,6 +60,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-javierbl89-checklistdjan-zobf62mr5ki.ws-eu38.gitpod.io']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

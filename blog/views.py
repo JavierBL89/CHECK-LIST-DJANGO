@@ -12,7 +12,7 @@ class PostList(generic.ListView):
 # Create your views here.
 
 class PostDetail(View):
-
+   
     def get(self, request, slug, *args, **kwargs):
         queryset = Post.objects.filter(status=1)
         post = get_object_or_404(queryset, slug=slug)
@@ -21,14 +21,17 @@ class PostDetail(View):
         if post.likes.filter(id=self.request.user.id).exists():
             likes = True
         
-        return render(request, "post_detail.html",
-        { "post": post,
-        "comments": comments,
-        "liked": liked,
-        "commented": False
-
-        },
-        )
+        return render (
+            request, 
+            "post_detail.html",
+            { "post": post,
+            "comments": comments,
+            "liked": liked,
+            "comment_form": CommentForm(),
+            "commented": False
+    
+            },
+            )
 
     
     def post(self, request, slug, *args, **kwargs):
@@ -43,20 +46,21 @@ class PostDetail(View):
         if comment_form.is_valid():
             comment_form.instance.email = request.user.email
             comment_form.instance.name = request.user.username
-            comment = comment_form(commit=False)
+            comment = comment_form.save(commit=False)
             comment.post = post
             comment.save()
         else:
             comment_form = CommentForm()
 
         
-        return render(request, 
-        "post_detail.html",
-        { 
-            "post": post,
-            "comments": comments,
-            "liked": liked,
-            "commented": True
-        },
-        )
-
+        return render (
+            request, 
+            "post_detail.html",
+            { 
+                "post": post,
+                "comments": comments,
+                "liked": liked,
+                "commented": True
+            },
+            )
+    

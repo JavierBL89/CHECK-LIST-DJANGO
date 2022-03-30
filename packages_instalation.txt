@@ -1,0 +1,6 @@
+pip3 install Django==3.2 gunicorn 
+pip3 install django_database_url psycopg2 
+pip3 install dj3_cloudinary_storage django-summernote django-allauth django-crispy-forms
+pip3 freeze --local > requirements.txt
+python3 manage.py migrate
+python3 manage.py runserver
